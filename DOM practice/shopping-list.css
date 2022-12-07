@@ -70,13 +70,14 @@ div {
   cursor: pointer;
 }
 
-/* .item__box {
-
-} */
+.item__left {
+  display: flex;
+}
 
 .strickBtn {
-  width: 10px;
-  height: 100%;
+  margin: 3px 5px;
+  width: 13px;
+  height: 13px;
 }
 
 .delete {
