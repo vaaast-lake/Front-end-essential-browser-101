@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+
+  <section>
+    <img src="./carrot.png" alt="carrot">
+    <h1 id="brand">Dream Coding</h1>
+    <h3>Don't forget to code your dream</h3>
+  </section>
+  <span>Hello World!</span>
+  <script>
+    const section = document.querySelector('section');
+    const h2 = document.createElement('h2');
+    const h1 = document.querySelector('h1');
+    const h3 = document.querySelector('h3');
+
+    h1.append(' append text');
+    h1.append(h2);
+    console.log(h1.childNodes);
+    console.log(h1.children);
+    
+    h2.setAttribute('class', 'title'); // <h2 class='title'></h2>
+    h2.textContent = 'This is a title.'; // <h2 class='title'>This is a title.</h2>
+    console.log(h2.textContent);
+    console.log(h2.innerText);
+    console.log(h2);
+
+    console.log(section.childNodes);
+
+    section.style.backgroundColor = 'black';
+    console.log(section.style.backgroundColor);
+
+    // section.insertBefore(h2, h3);
+
+    // section.append(h2);
+  </script>
+</body>
+</html>

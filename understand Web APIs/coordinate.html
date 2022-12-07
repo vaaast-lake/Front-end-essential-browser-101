@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style class="style">
+    div {
+      width: 100px;
+      height: 100px;
+      background-color: bisque;
+      margin: 10px 0;
+    }
+
+    .target {
+      background-color: brown;
+    }
+
+  </style>
+</head>
+<body>
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+
+  <script>
+    window.addEventListener('click', (el) => {
+      const target = el.path[0].localName === 'div' ? el.path[0] : undefined;
+      const rect = target.getBoundingClientRect();
+
+      if (target.className) {
+        target.className = '';
+      } else {
+        target.className = 'target';
+      }
+
+      // console.log(el);
+      // console.log(target.classList)
+      console.log(target.className);
+      console.log(rect);
+      console.log(`clientX: ${el.clientX}\nclientY: ${el.clientY}\npageX: ${el.pageX}\npageY: ${el.pageY}`);
+    });
+  </script>
+
+</body>
+</html>

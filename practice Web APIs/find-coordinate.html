@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body {
+      background-color: black;
+      cursor: none;
+    }
+
+    div {
+      position: absolute;
+      box-sizing: border-box;
+    }
+
+    .aim {
+      position: absolute;
+      /* display: inline-block; */
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .horizon {
+      border-top: 2px solid white;
+      width: 100%;
+      top: 50%;
+    }
+
+    .vertical {
+      border-left: 2px solid white;
+      height: 100%;
+      left: 50%;
+    }
+
+    .client-coordinate {
+      position: absolute;
+      display: inline-block;
+      color: white;
+      top: 50%;
+      left: 50%;
+      transform: translate(30%, 100%);
+    }
+  </style>
+  <script src="find-coordinate.js" defer></script>
+</head>
+<body>
+  <img src="./target.png" class="aim" alt="target-mark">
+  <div class="horizon"></div>
+  <div class="vertical"></div>
+  <div class="client-coordinate"></div>
+</body>
+</html>

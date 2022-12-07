@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="test.js" defer></script>
+  <script src="test.js" async></script>
+</head>
+<body>
+  <script>
+    window.addEventListener('load', () => {
+      console.log('load');
+    });
+
+    window.addEventListener('DOMContentLoaded', () => {
+      console.log('DOMContentLoaded');
+    });
+    // 사용자가 페이지를 나가기 전에 호출하는 함수
+    window.addEventListener('beforeunload', () => {
+      console.log('load');
+    });
+    // 페이지가 언로드 됐을 때 호출. resource is being unloaded
+    window.addEventListener('unload', () => {
+      console.log('load');
+    });
+  </script>
+</body>
+</html>
