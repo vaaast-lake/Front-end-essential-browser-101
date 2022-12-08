@@ -33,29 +33,45 @@ const onAdd = () => {
 const createItem = (text) => {
   const itemRow = document.createElement('li');
   itemRow.setAttribute('class', 'item__row');
+  itemRow.innerHTML = `
+    <div class="item">
+      <span class="item__name">${text}</span>
+      <button class="item__delete">
+        <i class="fa-solid fa-trash-can"></i>
+      </button>
+    </div>
+    <div class="item__divider"></div>
+  `;
 
-  const item = document.createElement('div');
-  item.setAttribute('class', 'item');
-
-  const name = document.createElement('span');
-  name.setAttribute('class', 'item__name');
-  name.innerText = text;
-
-  const deleteBtn = document.createElement('button');
-  deleteBtn.setAttribute('class', 'item__delete');
-  deleteBtn.innerHTML = '<i class="fa-solid fa-trash-can"></i>';
-  deleteBtn.addEventListener('click', () => {
-    items.removeChild(itemRow);
+  itemRow.addEventListener('click', () => {
+    console.log(event.target.tagName);
+    if (event.target.tagName === "I") {
+      items.removeChild(itemRow);
+    }
   });
 
-  const itemDivider = document.createElement('div');
-  itemDivider.setAttribute('class', 'item__divider');
+  // const item = document.createElement('div');
+  // item.setAttribute('class', 'item');
 
-  item.appendChild(name);
-  item.appendChild(deleteBtn);
+  // const name = document.createElement('span');
+  // name.setAttribute('class', 'item__name');
+  // name.innerText = text;
 
-  itemRow.appendChild(item);
-  itemRow.appendChild(itemDivider);
+  // const deleteBtn = document.createElement('button');
+  // deleteBtn.setAttribute('class', 'item__delete');
+  // deleteBtn.innerHTML = '<i class="fa-solid fa-trash-can"></i>';
+  // deleteBtn.addEventListener('click', () => {
+  //   items.removeChild(itemRow);
+  // });
+
+  // const itemDivider = document.createElement('div');
+  // itemDivider.setAttribute('class', 'item__divider');
+
+  // item.appendChild(name);
+  // item.appendChild(deleteBtn);
+
+  // itemRow.appendChild(item);
+  // itemRow.appendChild(itemDivider);
   return itemRow;
 }
 
