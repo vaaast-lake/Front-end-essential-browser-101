@@ -22,7 +22,9 @@ const onAdd = () => {
   const item = createItem(text);
   // 3. items 컨테이너 안에 새로 만든 아이템을 추가한다.
   items.appendChild(item);
-  // 4. 인풋을 초기화 한다.
+  // 4. 새로 추가된 아이템으로 스크롤링
+  item.scrollIntoView({block: 'center'});
+  // 5. 인풋을 초기화 한다.
   input.value = '';
   // 입력 후 다시 인풋에 포커스를 줘서 재입력하기 용이하게 만듦
   input.focus();
@@ -62,5 +64,8 @@ addBtn.addEventListener('click', () => {
 });
 
 input.addEventListener('keypress', (event) => {
-
+  if (event.key === 'Enter') {
+    onAdd();
+  }
 });
+
