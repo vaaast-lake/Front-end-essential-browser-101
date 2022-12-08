@@ -9,6 +9,12 @@
 const items = document.querySelector('.items');
 const input = document.querySelector('.footer__input');
 const addBtn = document.querySelector('.footer__button');
+const form = document.querySelector('.new-form');
+
+form.addEventListener('submit', event => {
+  event.preventDefault();
+  onAdd();
+});
 
 // 클릭해서 발생한 이벤트를 처리하는 함수는 보통 on을 붙인다.
 const onAdd = () => {
@@ -78,15 +84,18 @@ const createItem = (text) => {
   return itemRow;
 }
 
-addBtn.addEventListener('click', () => {
-  onAdd();
-});
+// addBtn.addEventListener('click', () => {
+//   onAdd();
+// });
 
-input.addEventListener('keypress', (event) => {
-  if (event.key === 'Enter') {
-    onAdd();
-  }
-});
+// input.addEventListener('keydown', (event) => {
+//   // if (event.isComposing) {
+//   //   return;
+//   // }
+//   if (event.key === 'Enter') {
+//     onAdd();
+//   }
+// });
 
 items.addEventListener('click', event => {
   const id = event.target.dataset.id;
