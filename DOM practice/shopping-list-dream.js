@@ -30,25 +30,27 @@ const onAdd = () => {
   input.focus();
 }
 
+let id = 0; // production level 에서는 UUID(unique id)나 obj의 hash code 로 고유한 아이디를 만들지만, 간단한 프로젝트라 숫자로 대체한다. 
 const createItem = (text) => {
   const itemRow = document.createElement('li');
   itemRow.setAttribute('class', 'item__row');
+  itemRow.setAttribute('data-id', id);
   itemRow.innerHTML = `
     <div class="item">
       <span class="item__name">${text}</span>
       <button class="item__delete">
-        <i class="fa-solid fa-trash-can"></i>
+        <i class="fa-solid fa-trash-can" data-id="${id}"></i>
       </button>
     </div>
     <div class="item__divider"></div>
   `;
+  ++id;
 
-  itemRow.addEventListener('click', () => {
-    console.log(event.target.tagName);
-    if (event.target.tagName === "I") {
-      items.removeChild(itemRow);
-    }
-  });
+  // itemRow.addEventListener('click', () => {
+  //   if (event.target.tagName === "I") {
+  //     items.removeChild(itemRow);
+  //   }
+  // });
 
   // const item = document.createElement('div');
   // item.setAttribute('class', 'item');
@@ -72,6 +74,7 @@ const createItem = (text) => {
 
   // itemRow.appendChild(item);
   // itemRow.appendChild(itemDivider);
+
   return itemRow;
 }
 
@@ -85,3 +88,10 @@ input.addEventListener('keypress', (event) => {
   }
 });
 
+items.addEventListener('click', event => {
+  const id = event.target.dataset.id;
+  if (event.target.dataset.id) {
+    const toBeDeleted = document.querySelector(`.item__row[data-id="${id}"]`);
+    toBeDeleted.remove();
+  }
+});
