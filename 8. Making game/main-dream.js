@@ -17,6 +17,7 @@ const gameScore = document.querySelector('.game__score');
 // pop-up
 const popUp = document.querySelector('.pop-up');
 const popUpMessage = document.querySelector('.pop-up__message');
+const popUpRefresh = document.querySelector('.pop-up__refresh');
 
 const randomNumber = (min, max) => {
   return Math.random() * (max - min + 1) + min;
@@ -73,15 +74,17 @@ const startGame = () => {
 }
 
 const stopGame = () => {
-  popUp.style.display = 'block';
-  popUpMessage.innerText = `Replay?`;
-  clearInterval(timer);
+  stopGameTimer();
 }
 
 const showStopButton = () => {
   const icon = gameBtn.querySelector('.fa-play');
   icon.classList.add('fa-pause');
   icon.classList.remove('fa-play');
+}
+
+const hideGameButton = () => {
+  gameBtn.style.visibility = 'hidden';
 }
 
 const showTimerAndScore = () => {
@@ -101,8 +104,19 @@ const startGameTimer = () => {
   }, 1000);
 }
 
+const stopGameTimer = () => {
+  clearInterval(timer);
+  hideGameButton();
+  showPopUpWithText('Replay?')
+}
+
 const updateTimerText = (time) => {
   const minutes = Math.floor(time / 60);
   const seconds = time % 60;
   gameTimer.innerText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`
+}
+
+const showPopUpWithText = (text) => {
+  popUpMessage.innerText = text;
+  popUp.classList.remove('hide');
 }
