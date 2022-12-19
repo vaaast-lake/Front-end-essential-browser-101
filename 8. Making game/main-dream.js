@@ -1,5 +1,6 @@
 'use strict';
 
+// random positioned carrots & bugs
 const CARROT_SIZE = 80;
 const field = document.querySelector('.game__field');
 const fieldRect = field.getBoundingClientRect();
@@ -34,3 +35,44 @@ const addItem = (className, count, imgPath) => {
 }
 
 initGame();
+
+// timer button & timer
+const gameBtn = document.querySelector('.game__button');
+const timer = document.querySelector('.game__timer');
+
+let interval = null;
+let remainingSeconds = 10;
+
+const updateInterfaceTime = () => {
+  timer.textContent = `00:${remainingSeconds.toString().padStart(2, '0')}`;
+}
+
+const start = () => {
+  if (remainingSeconds === 0) return;
+
+  interval = setInterval(() => {
+    remainingSeconds--;
+    updateInterfaceTime();
+    if (remainingSeconds === 0) {
+      remainingSeconds = 10;
+      stop();
+    }
+  }, 1000);
+  
+  gameBtn.innerHTML = `<i class="fa-solid fa-pause"></i>`;
+}
+
+const stop = () => {
+  clearInterval(interval);
+  interval = null;
+  gameBtn.innerHTML = `<i class="fa-solid fa-play"></i>`;
+  updateInterfaceTime();
+}
+
+gameBtn.addEventListener('click', () => {
+  if (interval === null) {
+    start();
+  } else {
+    stop();
+  }
+});
