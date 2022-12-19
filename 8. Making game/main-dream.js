@@ -11,6 +11,7 @@ const fieldRect = field.getBoundingClientRect();
 
 // timer button & timer variables
 const gameBtn = document.querySelector('.game__button');
+const gameBtnIcon = gameBtn.querySelector('.fa-play');
 const gameTimer = document.querySelector('.game__timer');
 const gameScore = document.querySelector('.game__score');
 
@@ -26,8 +27,6 @@ const randomNumber = (min, max) => {
 const initGame = () => {
   field.innerHTML = '';
   gameScore.innerText = CARROT_COUNT;
-  addItem('carrot', 5, './carrot/img/carrot.png');
-  addItem('carrot', 5, './carrot/img/bug.png');
 }
 
 const addItem = (className, count, imgPath) => {
@@ -71,6 +70,8 @@ const startGame = () => {
   showStopButton();
   showTimerAndScore();
   startGameTimer();
+  addItem('carrot', 5, './carrot/img/carrot.png');
+  addItem('carrot', 5, './carrot/img/bug.png');
 }
 
 const stopGame = () => {
@@ -78,13 +79,21 @@ const stopGame = () => {
 }
 
 const showStopButton = () => {
-  const icon = gameBtn.querySelector('.fa-play');
-  icon.classList.add('fa-pause');
-  icon.classList.remove('fa-play');
+  gameBtnIcon.classList.add('fa-pause');
+  gameBtnIcon.classList.remove('fa-play');
+}
+
+const showPlayButton = () => {
+  gameBtnIcon.classList.add('fa-play');
+  gameBtnIcon.classList.remove('fa-pause');
 }
 
 const hideGameButton = () => {
   gameBtn.style.visibility = 'hidden';
+}
+
+const showGameButton = () => {
+  gameBtn.style.visibility = 'visible';
 }
 
 const showTimerAndScore = () => {
@@ -98,6 +107,8 @@ const startGameTimer = () => {
   timer = setInterval(() => {
     if (remainingSeconds === 0) {
       clearInterval(timer);
+      showPopUpWithText('Replay?');
+      hideGameButton();
       return; 
     }
     updateTimerText(--remainingSeconds);
@@ -120,3 +131,14 @@ const showPopUpWithText = (text) => {
   popUpMessage.innerText = text;
   popUp.classList.remove('hide');
 }
+
+const hidePopUp = () => {
+  popUp.classList.add('hide');
+}
+
+popUpRefresh.addEventListener('click', () => {
+  initGame();
+  hidePopUp();
+  showGameButton();
+  showPlayButton();
+});
