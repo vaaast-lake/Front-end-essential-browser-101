@@ -31,7 +31,9 @@ export default class Timer {
   updateInterfaceControls() {
     if (this.interval === null) {
       this.el.control.innerHTML = `<i class="fa-solid fa-play"></i>`;
-      this.el.seconds.textContent = `${this.remainingSeconds}`
+      this.el.seconds.textContent = `
+        ${this.remainingSeconds.toString().padStart(2, '0')}
+      `;
     } else {
       this.el.control.innerHTML = `<i class="fa-solid fa-pause"></i>`;
     }

@@ -90,9 +90,12 @@ img {
 }
 
 .container.lower__container {
-  /* display: flex; */
   display: none;
   text-align: center;
+}
+
+.container.lower__container.active {
+  display: flex;
 }
 
 .game-over-message {
