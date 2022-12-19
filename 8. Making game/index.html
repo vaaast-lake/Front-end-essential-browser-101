@@ -12,13 +12,20 @@
 <body>
   <div class="main">
     <header class="container upper__container">
-      <button class="btn play-btn"><i class="fa-solid fa-play"></i></button>
+      <div class="time__control">
+        <button class="btn timer__btn--control"><i class="fa-solid fa-play"></i></button>
+        <div class="timer">
+          <span class="timer__part timer__part--minutes">00</span>
+          <span class="timer__part">:</span>
+          <span class="timer__part timer__part--seconds">00</span>
+        </div>
+      </div>
       <span class="counter">10</span>
     </header>
     <footer class="container lower__container">
       <div class="game-over-message">
-        <button class="btn replay-btn"><i class="fa-solid fa-arrow-rotate-right"></i></button>
-        <span class="message">Replay?</span>
+        <button class="btn message__btn--reset"><i class="fa-solid fa-arrow-rotate-right"></i></button>
+        <span class="message__text">Replay?</span>
       </div>
       <img src="./carrot/img/bug.png" alt="bug-img" class="bug">
       <img src="./carrot/img/carrot.png" alt="carrot-img" class="carrot">
