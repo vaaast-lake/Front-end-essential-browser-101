@@ -11,6 +11,10 @@ const fieldRect = field.getBoundingClientRect();
 const gameBtn = document.querySelector('.game__button');
 const gameTimer = document.querySelector('.game__timer');
 const gameScore = document.querySelector('.game__score');
+
+// pop-up
+const popUP = document.querySelector('.pop-up');
+
 const randomNumber = (min, max) => {
   return Math.random() * (max - min + 1) + min;
 }
@@ -82,3 +86,13 @@ const showTimerAndScore = () => {
 }
 
 const startGameTimer = () => {
+  let remainingSeconds = 10;
+  timer = setInterval(() => {
+    remainingSeconds--;
+    gameTimer.textContent = `00:${remainingSeconds.toString().padStart(2, '0')}`;
+
+    if (remainingSeconds === 0) {
+      stopGame();
+    }
+  }, 1000);
+}

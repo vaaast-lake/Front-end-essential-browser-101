@@ -85,7 +85,7 @@ body {
   transform: translateY(-120%);
 }
 
-.pop-up--hide {
+.pop-up.hide {
   display: none;
 }
 
