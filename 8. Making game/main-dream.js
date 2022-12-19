@@ -15,7 +15,8 @@ const gameTimer = document.querySelector('.game__timer');
 const gameScore = document.querySelector('.game__score');
 
 // pop-up
-const popUP = document.querySelector('.pop-up');
+const popUp = document.querySelector('.pop-up');
+const popUpMessage = document.querySelector('.pop-up__message');
 
 const randomNumber = (min, max) => {
   return Math.random() * (max - min + 1) + min;
@@ -72,7 +73,8 @@ const startGame = () => {
 }
 
 const stopGame = () => {
-  popUP.style.display = 'block';
+  popUp.style.display = 'block';
+  popUpMessage.innerText = `Replay?`;
   clearInterval(timer);
 }
 
