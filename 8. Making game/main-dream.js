@@ -4,8 +4,10 @@
 const CARROT_SIZE = 80;
 const CARROT_COUNT = 5;
 const BUG_COUNT = 5;
+const GAME__DURATION__SEC = 10;
 const field = document.querySelector('.game__field');
 const fieldRect = field.getBoundingClientRect();
+
 
 // timer button & timer variables
 const gameBtn = document.querySelector('.game__button');
@@ -86,13 +88,19 @@ const showTimerAndScore = () => {
 }
 
 const startGameTimer = () => {
-  let remainingSeconds = 10;
+  let remainingSeconds = GAME__DURATION__SEC;
+  updateTimerText(remainingSeconds);
   timer = setInterval(() => {
-    remainingSeconds--;
-    gameTimer.textContent = `00:${remainingSeconds.toString().padStart(2, '0')}`;
-
     if (remainingSeconds === 0) {
-      stopGame();
+      clearInterval(timer);
+      return; 
     }
+    updateTimerText(--remainingSeconds);
   }, 1000);
+}
+
+const updateTimerText = (time) => {
+  const minutes = Math.floor(time / 60);
+  const seconds = time % 60;
+  gameTimer.innerText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`
 }
