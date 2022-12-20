@@ -11,7 +11,6 @@ const fieldRect = field.getBoundingClientRect();
 
 // timer button & timer variables
 const gameBtn = document.querySelector('.game__button');
-const gameBtnIcon = gameBtn.querySelector('.fa-play');
 const gameTimer = document.querySelector('.game__timer');
 const gameScore = document.querySelector('.game__score');
 
@@ -28,7 +27,33 @@ const initGame = () => {
   CARROT_COUNT = 5;
   field.innerHTML = '';
   gameScore.innerText = CARROT_COUNT;
-  gameTimer.innerText = '00:10';
+}
+
+const onFieldClick = (e) => {
+  if (!started) return;
+
+  const target = e.target;
+  if (target.matches('.carrot')) {
+    target.remove();
+    score++;
+    updateScoreBoard();
+    if (score === CARROT_COUNT) {
+      finishGame(true);
+    }
+  } else if (target.matches('.bug')) {
+    stopGameTimer();
+    finishGame(false);
+  }
+}
+
+const updateScoreBoard = () => {
+  gameScore.innerText = CARROT_COUNT - score;
+}
+
+const finishGame = (win) => {
+  started = false;
+  hideGameButton();
+  showPopUpWithText(win? 'You Won' : 'You Lost');
 }
 
 const addItem = (className, count, imgPath) => {
@@ -58,47 +83,45 @@ let started = false;
 let score = 0;
 let timer = undefined;
 
+field.addEventListener('click', onFieldClick);
+
 gameBtn.addEventListener('click', () => {
   if (started) {
     stopGame();
   } else {
     startGame();
   }
-  started = !started;
 });
 
+popUpRefresh.addEventListener('click', () => {
+  startGame();
+  hidePopUp();
+})
+
 const startGame = () => {
+  started = true;
   initGame();
   showStopButton();
   showTimerAndScore();
   startGameTimer();
   addItem('carrot', 5, './carrot/img/carrot.png');
   addItem('bug', 5, './carrot/img/bug.png');
-  addEvent();
 }
 
 const stopGame = () => {
+  started = false;
   stopGameTimer();
   showPopUpWithText('Replay?');
-  field.removeEventListener('click', removeImg);
 }
 
 const showStopButton = () => {
-  gameBtnIcon.classList.add('fa-pause');
-  gameBtnIcon.classList.remove('fa-play');
-}
-
-const showPlayButton = () => {
-  gameBtnIcon.classList.add('fa-play');
-  gameBtnIcon.classList.remove('fa-pause');
+  const icon = gameBtn.querySelector('.fa-play');
+  icon.classList.add('fa-pause');
+  icon.classList.remove('fa-play');
 }
 
 const hideGameButton = () => {
   gameBtn.style.visibility = 'hidden';
-}
-
-const showGameButton = () => {
-  gameBtn.style.visibility = 'visible';
 }
 
 const showTimerAndScore = () => {
@@ -111,10 +134,8 @@ const startGameTimer = () => {
   updateTimerText(remainingSeconds);
   timer = setInterval(() => {
     if (remainingSeconds === 0) {
-      stopGameTimer();
-      showPopUpWithText('Replay?');
-      field.removeEventListener('click', removeImg);
-      started = !started;
+      clearInterval(timer);
+      finishGame(CARROT_COUNT === score);
       return; 
     }
     updateTimerText(--remainingSeconds);
@@ -144,43 +165,4 @@ const hidePopUp = () => {
 popUpRefresh.addEventListener('click', () => {
   initGame();
   hidePopUp();
-  showGameButton();
-  showPlayButton();
-  field.removeEventListener('click', removeImg);
 });
-
-const addEvent = () => {
-  field.addEventListener('click', removeImg);
-}
-
-const removeImg = (el) => {
-  const target = el.target.nodeName === 'IMG' ? el.target : null;
-  if (target) {
-    el.target.style.display = 'none';
-    checkImg(target);
-  } else {
-    return;
-  }
-}
-
-const checkImg = (target) => {
-  if (target.className === 'bug') {
-    stopGameTimer()
-    showPopUpWithText('You lose');
-    field.removeEventListener('click', removeImg);
-    started = !started;
-  } else if (target.className === 'carrot') {
-    carrotCountDown();
-    return;
-  }
-}
-
-const carrotCountDown = () => {
-  gameScore.innerText = --CARROT_COUNT;
-  if (CARROT_COUNT === 0) {
-    stopGameTimer()
-    showPopUpWithText('You Won!');
-    field.removeEventListener('click', removeImg);
-    started = !started;
-  }
-}
