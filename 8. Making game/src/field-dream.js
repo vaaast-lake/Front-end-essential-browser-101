@@ -11,6 +11,14 @@ export default class Field {
     this.bugCount = bugCount;
     this.field = document.querySelector('.game__field');
     this.fieldRect = this.field.getBoundingClientRect();
+    // js에서는 함수를 인자로 전달할 때 class 정보가 전달되지 않는다.
+    //this.field.addEventListener('click', this.onClick);
+    // 결국 this binding 과정을 하나 거쳐야 한다. 방법은 3 가지.
+    // this.onClick() = this.onClick.bind(this);로 클래스와 바인드 시켜주거나 아래 처럼 arrow function을 이용해 this를 유지해준다.
+    // this.field.addEventListener('click', (event) => {
+    //   this.onClick(event);
+    // });
+    // 혹은 보내려는 함수를 다른 콜백으로 전달할 때 멤버 변수(name = arrow function)로 만들어서 전달한다.
     this.field.addEventListener('click', this.onClick);
   }
 
@@ -46,7 +54,7 @@ export default class Field {
   }
 
   // 게임의 시작 여부, 스코어 등 모르는 정보는 다 삭제
-  onClick(e) {
+  onClick = (e) => {
     const target = e.target;
     if (target.matches('.carrot')) {
       target.remove();
