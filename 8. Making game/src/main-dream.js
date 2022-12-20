@@ -1,5 +1,7 @@
 'use strict';
 
+import PopUp from './popup-dream.js';
+
 // random positioned carrots & bugs variables
 const CARROT_SIZE = 80;
 let CARROT_COUNT = 5;
@@ -13,11 +15,6 @@ const fieldRect = field.getBoundingClientRect();
 const gameBtn = document.querySelector('.game__button');
 const gameTimer = document.querySelector('.game__timer');
 const gameScore = document.querySelector('.game__score');
-
-// pop-up
-const popUp = document.querySelector('.pop-up');
-const popUpMessage = document.querySelector('.pop-up__message');
-const popUpRefresh = document.querySelector('.pop-up__refresh');
 
 // timer button & timer
 const carrotSound = new Audio('./carrot/sound/carrot_pull.mp3');
@@ -80,7 +77,7 @@ const finishGame = (win) => {
   }
   stopGameTimer();
   stopSound(bgSound);
-  showPopUpWithText(win ? 'You Won' : 'You Lost');
+  gameFinishBanner.showWithText(win ? 'You Won' : 'You Lost');
 }
 
 const addItem = (className, count, imgPath) => {
@@ -105,6 +102,11 @@ const addItem = (className, count, imgPath) => {
 
 initGame();
 
+const gameFinishBanner = new PopUp();
+gameFinishBanner.setClickListener(() => {
+  startGame();
+});
+
 field.addEventListener('click', onFieldClick);
 
 gameBtn.addEventListener('click', () => {
@@ -114,11 +116,6 @@ gameBtn.addEventListener('click', () => {
     startGame();
   }
 });
-
-popUpRefresh.addEventListener('click', () => {
-  startGame();
-  hidePopUp();
-})
 
 const startGame = () => {
   started = true;
@@ -135,7 +132,7 @@ const stopGame = () => {
   started = false;
   stopGameTimer();
   hideGameButton();
-  showPopUpWithText('Replay?');
+  gameFinishBanner.showWithText('Repaly?');
   playSound(alertSound);
   stopSound(bgSound);
 }
@@ -179,17 +176,3 @@ const updateTimerText = (time) => {
   const seconds = time % 60;
   gameTimer.innerText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`
 }
-
-const showPopUpWithText = (text) => {
-  popUpMessage.innerText = text;
-  popUp.classList.remove('hide');
-}
-
-const hidePopUp = () => {
-  popUp.classList.add('hide');
-}
-
-popUpRefresh.addEventListener('click', () => {
-  initGame();
-  hidePopUp();
-});
