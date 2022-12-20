@@ -24,6 +24,7 @@ const randomNumber = (min, max) => {
 }
 
 const initGame = () => {
+  score = 0;
   CARROT_COUNT = 5;
   field.innerHTML = '';
   gameScore.innerText = CARROT_COUNT;
@@ -36,14 +37,23 @@ const onFieldClick = (e) => {
   if (target.matches('.carrot')) {
     target.remove();
     score++;
+    playSound(carrotSound);
     updateScoreBoard();
     if (score === CARROT_COUNT) {
       finishGame(true);
     }
   } else if (target.matches('.bug')) {
-    stopGameTimer();
     finishGame(false);
   }
+}
+
+const playSound = (sound) => {
+  sound.currentTime = 0;
+  sound.play();
+}
+
+const stopSound = (sound) => {
+  sound.pause();
 }
 
 const updateScoreBoard = () => {
@@ -53,7 +63,14 @@ const updateScoreBoard = () => {
 const finishGame = (win) => {
   started = false;
   hideGameButton();
-  showPopUpWithText(win? 'You Won' : 'You Lost');
+  if (win) {
+    playSound(winSound);
+  } else {
+    playSound(bugSound);
+  }
+  stopGameTimer();
+  stopSound();
+  showPopUpWithText(win ? 'You Won' : 'You Lost');
 }
 
 const addItem = (className, count, imgPath) => {
@@ -79,6 +96,11 @@ const addItem = (className, count, imgPath) => {
 initGame();
 
 // timer button & timer
+const carrotSound = new Audio('./carrot/sound/carrot_pull.mp3');
+const alertSound = new Audio('./carrot/sound/alert.wav');
+const bgSound = new Audio('./carrot/sound/bg.mp3');
+const bugSound = new Audio('./carrot/sound/bug_pull.mp3');
+const winSound = new Audio('./carrot/sound/game_win.mp3');
 let started = false;
 let score = 0;
 let timer = undefined;
@@ -106,12 +128,16 @@ const startGame = () => {
   startGameTimer();
   addItem('carrot', 5, './carrot/img/carrot.png');
   addItem('bug', 5, './carrot/img/bug.png');
+  playSound(bgSound);
 }
 
 const stopGame = () => {
   started = false;
   stopGameTimer();
+  hideGameButton();
   showPopUpWithText('Replay?');
+  playSound(alertSound);
+  stopSound(bgSound);
 }
 
 const showStopButton = () => {
