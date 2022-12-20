@@ -1,6 +1,6 @@
 'use strict';
 
-import Field from './field-dream.js';
+import { Field, ItemType } from './field-dream.js';
 import * as sound from './sound.js'
 
 // 타입을 보장.
@@ -66,13 +66,13 @@ class Game {
 
   onItemClick = (item) => {
     if (!this.started) return;
-    if (item === 'carrot') {
+    if (item === ItemType.carrot) {
       this.score++;
       this.updateScoreBoard();
       if (this.score === this.carrotCount) {
         this.stop(Reason.win);
       }
-    } else if (item === 'bug') {
+    } else if (item === ItemType.bug) {
       this.stop(Reason.lose);
     }
   }

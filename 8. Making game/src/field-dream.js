@@ -5,7 +5,12 @@ import * as sound from './sound.js'
 // 상수라 클래스 밖에서 선언.
 const CARROT_SIZE = 80;
 
-export default class Field {
+export const ItemType = Object.freeze({
+  carrot: 'carrot',
+  bug: 'bug',
+});
+
+export  class Field {
   constructor(carrotCount, bugCount) {
     this.carrotCount = carrotCount;
     this.bugCount = bugCount;
@@ -24,8 +29,8 @@ export default class Field {
 
   init() {
     this.field.innerHTML = '';
-    this._addItem('carrot', this.carrotCount, './carrot/img/carrot.png');
-    this._addItem('bug', this.bugCount, './carrot/img/bug.png');
+    this._addItem(ItemType.carrot, this.carrotCount, './carrot/img/carrot.png');
+    this._addItem(ItemType.bug, this.bugCount, './carrot/img/bug.png');
   }
 
   setClickListener(onItemClick) {
@@ -60,9 +65,9 @@ export default class Field {
     if (target.matches('.carrot')) {
       target.remove();
       sound.playCarrot();
-      this.onItemClick && this.onItemClick('carrot');
+      this.onItemClick && this.onItemClick(ItemType.carrot);
     } else if (target.matches('.bug')) {
-      this.onItemClick && this.onItemClick('bug');
+      this.onItemClick && this.onItemClick(ItemType.bug);
     }
   }
 }
