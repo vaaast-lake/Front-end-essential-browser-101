@@ -6,6 +6,12 @@ button {
 
 body {
   text-align: center;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+body::-webkit-scrollbar {
+  width: 0;
 }
 
 .game {
