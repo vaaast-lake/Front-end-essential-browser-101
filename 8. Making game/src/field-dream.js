@@ -54,6 +54,7 @@ export default class Field {
   }
 
   // 게임의 시작 여부, 스코어 등 모르는 정보는 다 삭제
+  // 멤버 변수로 만들어서 this binding으로 만듦
   onClick = (e) => {
     const target = e.target;
     if (target.matches('.carrot')) {
