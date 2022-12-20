@@ -1,24 +1,27 @@
 'use strict';
 
 import PopUp from './popup-dream.js';
-import Game from './game-dream.js';
+import {GameBuilder, Reason} from './game-dream.js';
 
 
 
 const gameFinishBanner = new PopUp();
-const game = new Game(3, 2, 2);
+const game = new GameBuilder()
+              .gameDuration(5)
+              .carrotCount(3)
+              .bugCount(3)
+              .build();
 
 game.steGameStopListener(reason => {
-  console.log(reason);
   let message;
   switch (reason) {
-    case 'cancel':
+    case Reason.cancel:
       message = 'replay?';
       break;
-    case 'win':
+    case Reason.win:
       message = 'You Won';
       break;
-    case 'lose':
+    case Reason.lose:
       message = 'You Lost';
       break;
   
