@@ -1,6 +1,7 @@
 'use strict';
 
 import PopUp from './popup-dream.js';
+import Field from './field-dream.js';
 
 // random positioned carrots & bugs variables
 const CARROT_SIZE = 80;
@@ -28,30 +29,6 @@ let timer = undefined;
 
 const randomNumber = (min, max) => {
   return Math.random() * (max - min + 1) + min;
-}
-
-const initGame = () => {
-  score = 0;
-  CARROT_COUNT = 5;
-  field.innerHTML = '';
-  gameScore.innerText = CARROT_COUNT;
-}
-
-const onFieldClick = (e) => {
-  if (!started) return;
-
-  const target = e.target;
-  if (target.matches('.carrot')) {
-    target.remove();
-    score++;
-    playSound(carrotSound);
-    updateScoreBoard();
-    if (score === CARROT_COUNT) {
-      finishGame(true);
-    }
-  } else if (target.matches('.bug')) {
-    finishGame(false);
-  }
 }
 
 const playSound = (sound) => {
@@ -100,14 +77,26 @@ const addItem = (className, count, imgPath) => {
   }
 }
 
-initGame();
-
 const gameFinishBanner = new PopUp();
 gameFinishBanner.setClickListener(() => {
   startGame();
 });
 
-field.addEventListener('click', onFieldClick);
+const onItemClick = (item) => {
+  if (!started) return;
+  if (tiem === 'carrot') {
+    score++;
+    updateScoreBoard();
+    if (score === CARROT_COUNT) {
+      finishGame(true);
+    }
+  } else if (item === 'bug') {
+    finishGame(false);
+  }
+}
+
+const gameField = new Field(CARROT_COUNT, BUG_COUNT);
+gameField.setClickListener(onItemClick);
 
 gameBtn.addEventListener('click', () => {
   if (started) {
@@ -116,6 +105,14 @@ gameBtn.addEventListener('click', () => {
     startGame();
   }
 });
+
+const initGame = () => {
+  score = 0;
+  gameScore.innerText = CARROT_COUNT;
+  gameField.init();
+}
+
+initGame();
 
 const startGame = () => {
   started = true;
