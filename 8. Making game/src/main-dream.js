@@ -18,11 +18,6 @@ const gameTimer = document.querySelector('.game__timer');
 const gameScore = document.querySelector('.game__score');
 
 // timer button & timer
-const carrotSound = new Audio('./carrot/sound/carrot_pull.mp3');
-const alertSound = new Audio('./carrot/sound/alert.wav');
-const bgSound = new Audio('./carrot/sound/bg.mp3');
-const bugSound = new Audio('./carrot/sound/bug_pull.mp3');
-const winSound = new Audio('./carrot/sound/game_win.mp3');
 let started = false;
 let score = 0;
 let timer = undefined;

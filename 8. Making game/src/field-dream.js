@@ -1,6 +1,7 @@
 'use strict';
 
-const carrotSound = new Audio('./carrot/sound/carrot_pull.mp3');
+import * as sound from './sound.js'
+
 // 상수라 클래스 밖에서 선언.
 const CARROT_SIZE = 80;
 
@@ -49,7 +50,7 @@ export default class Field {
     const target = e.target;
     if (target.matches('.carrot')) {
       target.remove();
-      playSound(carrotSound);
+      sound.playCarrot();
       this.onItemClick && this.onItemClick('carrot');
     } else if (target.matches('.bug')) {
       this.onItemClick && this.onItemClick('bug');
@@ -58,11 +59,6 @@ export default class Field {
 }
 
 // 클래스와 상관없는 함수는 클래스 밖에 넣어서 메모리 절약.
-const playSound = (sound) => {
-  sound.currentTime = 0;
-  sound.play();
-}
-
 const randomNumber = (min, max) => {
   return Math.random() * (max - min + 1) + min;
 }
