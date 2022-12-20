@@ -19,6 +19,16 @@ const popUp = document.querySelector('.pop-up');
 const popUpMessage = document.querySelector('.pop-up__message');
 const popUpRefresh = document.querySelector('.pop-up__refresh');
 
+// timer button & timer
+const carrotSound = new Audio('./carrot/sound/carrot_pull.mp3');
+const alertSound = new Audio('./carrot/sound/alert.wav');
+const bgSound = new Audio('./carrot/sound/bg.mp3');
+const bugSound = new Audio('./carrot/sound/bug_pull.mp3');
+const winSound = new Audio('./carrot/sound/game_win.mp3');
+let started = false;
+let score = 0;
+let timer = undefined;
+
 const randomNumber = (min, max) => {
   return Math.random() * (max - min + 1) + min;
 }
@@ -69,7 +79,7 @@ const finishGame = (win) => {
     playSound(bugSound);
   }
   stopGameTimer();
-  stopSound();
+  stopSound(bgSound);
   showPopUpWithText(win ? 'You Won' : 'You Lost');
 }
 
@@ -94,16 +104,6 @@ const addItem = (className, count, imgPath) => {
 }
 
 initGame();
-
-// timer button & timer
-const carrotSound = new Audio('./carrot/sound/carrot_pull.mp3');
-const alertSound = new Audio('./carrot/sound/alert.wav');
-const bgSound = new Audio('./carrot/sound/bg.mp3');
-const bugSound = new Audio('./carrot/sound/bug_pull.mp3');
-const winSound = new Audio('./carrot/sound/game_win.mp3');
-let started = false;
-let score = 0;
-let timer = undefined;
 
 field.addEventListener('click', onFieldClick);
 
@@ -141,9 +141,10 @@ const stopGame = () => {
 }
 
 const showStopButton = () => {
-  const icon = gameBtn.querySelector('.fa-play');
+  const icon = gameBtn.querySelector('.fa-solid');
   icon.classList.add('fa-pause');
   icon.classList.remove('fa-play');
+  gameBtn.style.visibility = 'visible';
 }
 
 const hideGameButton = () => {
