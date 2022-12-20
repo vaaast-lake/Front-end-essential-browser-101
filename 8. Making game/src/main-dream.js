@@ -2,8 +2,7 @@
 
 import PopUp from './popup-dream.js';
 import {GameBuilder, Reason} from './game-dream.js';
-
-
+import * as sound from './sound.js'
 
 const gameFinishBanner = new PopUp();
 const game = new GameBuilder()
@@ -12,23 +11,26 @@ const game = new GameBuilder()
               .bugCount(3)
               .build();
 
-game.steGameStopListener(reason => {
+game.setGameStopListener(reason => {
   let message;
   switch (reason) {
     case Reason.cancel:
       message = 'replay?';
+      sound.playAlert();
       break;
     case Reason.win:
       message = 'You Won';
+      sound.playWin();
       break;
     case Reason.lose:
       message = 'You Lost';
+      sound.playBug();
       break;
   
     default:
       throw new Error('not valid reason');
   }
-  gameFinishBanner.showWithText(message)
+  gameFinishBanner.showWithText(message);
 });
 
 gameFinishBanner.setClickListener(() => {
