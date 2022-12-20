@@ -2,7 +2,7 @@
 
 // random positioned carrots & bugs variables
 const CARROT_SIZE = 80;
-const CARROT_COUNT = 5;
+let CARROT_COUNT = 5;
 const BUG_COUNT = 5;
 const GAME__DURATION__SEC = 10;
 const field = document.querySelector('.game__field');
@@ -25,8 +25,10 @@ const randomNumber = (min, max) => {
 }
 
 const initGame = () => {
+  CARROT_COUNT = 5;
   field.innerHTML = '';
   gameScore.innerText = CARROT_COUNT;
+  gameTimer.innerText = '00:10';
 }
 
 const addItem = (className, count, imgPath) => {
@@ -71,11 +73,14 @@ const startGame = () => {
   showTimerAndScore();
   startGameTimer();
   addItem('carrot', 5, './carrot/img/carrot.png');
-  addItem('carrot', 5, './carrot/img/bug.png');
+  addItem('bug', 5, './carrot/img/bug.png');
+  addEvent();
 }
 
 const stopGame = () => {
   stopGameTimer();
+  showPopUpWithText('Replay?');
+  field.removeEventListener('click', removeImg);
 }
 
 const showStopButton = () => {
@@ -106,9 +111,10 @@ const startGameTimer = () => {
   updateTimerText(remainingSeconds);
   timer = setInterval(() => {
     if (remainingSeconds === 0) {
-      clearInterval(timer);
+      stopGameTimer();
       showPopUpWithText('Replay?');
-      hideGameButton();
+      field.removeEventListener('click', removeImg);
+      started = !started;
       return; 
     }
     updateTimerText(--remainingSeconds);
@@ -118,7 +124,6 @@ const startGameTimer = () => {
 const stopGameTimer = () => {
   clearInterval(timer);
   hideGameButton();
-  showPopUpWithText('Replay?')
 }
 
 const updateTimerText = (time) => {
@@ -141,4 +146,41 @@ popUpRefresh.addEventListener('click', () => {
   hidePopUp();
   showGameButton();
   showPlayButton();
+  field.removeEventListener('click', removeImg);
 });
+
+const addEvent = () => {
+  field.addEventListener('click', removeImg);
+}
+
+const removeImg = (el) => {
+  const target = el.target.nodeName === 'IMG' ? el.target : null;
+  if (target) {
+    el.target.style.display = 'none';
+    checkImg(target);
+  } else {
+    return;
+  }
+}
+
+const checkImg = (target) => {
+  if (target.className === 'bug') {
+    stopGameTimer()
+    showPopUpWithText('You lose');
+    field.removeEventListener('click', removeImg);
+    started = !started;
+  } else if (target.className === 'carrot') {
+    carrotCountDown();
+    return;
+  }
+}
+
+const carrotCountDown = () => {
+  gameScore.innerText = --CARROT_COUNT;
+  if (CARROT_COUNT === 0) {
+    stopGameTimer()
+    showPopUpWithText('You Won!');
+    field.removeEventListener('click', removeImg);
+    started = !started;
+  }
+}
