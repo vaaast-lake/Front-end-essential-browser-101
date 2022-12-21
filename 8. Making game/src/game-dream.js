@@ -133,9 +133,9 @@ class Game {
   }
   
   updateTimerText = (time) => {
-    const minutes = Math.floor(time / 60);
-    const seconds = time % 60;
-    this.gameTimer.innerText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`
+    const minutes = Math.floor(time / 60).toString().padStart(2, '0');
+    const seconds = (time % 60).toString().padStart(2, '0');
+    this.gameTimer.innerText = `${minutes}:${seconds}`;
   }
 
   initGame = () => {

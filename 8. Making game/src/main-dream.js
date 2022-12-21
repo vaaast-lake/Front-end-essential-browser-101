@@ -6,9 +6,9 @@ import * as sound from './sound.js'
 
 const gameFinishBanner = new PopUp();
 const game = new GameBuilder()
-              .gameDuration(5)
-              .carrotCount(3)
-              .bugCount(3)
+              .gameDuration(30)
+              .carrotCount(20)
+              .bugCount(20)
               .build();
 
 game.setGameStopListener(reason => {

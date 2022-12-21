@@ -52,8 +52,7 @@ export  class Field {
       item.setAttribute('src', imgPath);
       item.style.position = 'absolute';
   
-      item.style.left = `${x}px`;
-      item.style.top = `${y}px`;
+      item.style.transform = `translate(${x}px, ${y}px)`;
       this.field.appendChild(item);
     }
   }
