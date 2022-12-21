@@ -1,6 +1,6 @@
 'use strict';
 
-import * as sound from './sound.js'
+import * as sound from './sound-dream.js'
 
 // 상수라 클래스 밖에서 선언.
 const CARROT_SIZE = 80;

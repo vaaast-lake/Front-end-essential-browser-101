@@ -2,7 +2,7 @@
 
 import PopUp from './popup-dream.js';
 import {GameBuilder, Reason} from './game-dream.js';
-import * as sound from './sound.js'
+import * as sound from './sound-dream.js'
 
 const gameFinishBanner = new PopUp();
 const game = new GameBuilder()

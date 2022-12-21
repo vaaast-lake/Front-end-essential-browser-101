@@ -1,7 +1,7 @@
 'use strict';
 
 import { Field, ItemType } from './field-dream.js';
-import * as sound from './sound.js'
+import * as sound from './sound-dream.js'
 
 // 타입을 보장.
 export const Reason = Object.freeze({
