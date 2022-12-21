@@ -42,7 +42,7 @@ export  class Field {
     const x1 = 0;
     const y1 = 0;
     const x2 = this.fieldRect.width - CARROT_SIZE;
-    const y2 = this.fieldRect.height - CARROT_SIZE;
+    const y2 = this.fieldRect.height - CARROT_SIZE * 3/2;
     for (let i = 0; i < count; i++) {
       const item = document.createElement('img');
       const x = randomNumber(x1, x2);
