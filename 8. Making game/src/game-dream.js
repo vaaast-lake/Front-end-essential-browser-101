@@ -119,7 +119,6 @@ class Game {
     this.updateTimerText(remainingSeconds);
     this.timer = setInterval(() => {
       if (remainingSeconds === 0) {
-        clearInterval(this.timer);
         this.stop(this.CARROT_COUNT === this.score ? Reason.win : Reason.lose);
         return; 
       }
