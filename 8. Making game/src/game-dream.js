@@ -1,7 +1,7 @@
 'use strict';
 
 import { Field, ItemType } from './field-dream.js';
-import * as sound from './sound-dream.js'
+// import * as sound from './sound-dream.js'
 
 // 타입을 보장.
 export const Reason = Object.freeze({
@@ -87,14 +87,14 @@ class Game {
     this.showStopButton();
     this.showTimerAndScore();
     this.startGameTimer();
-    sound.playBackground();
+    // sound.playBackground();
   }
   
   stop = (reason) => {
     this.started = false;
     this.stopGameTimer();
     this.hideGameButton();
-    sound.stopBackground();
+    // sound.stopBackground();
     this.onGameStop && this.onGameStop(reason);
   }
 

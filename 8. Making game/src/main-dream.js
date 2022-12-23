@@ -1,8 +1,8 @@
 'use strict';
 
 import PopUp from './popup-dream.js';
-import {GameBuilder, Reason} from './game-dream.js';
-import * as sound from './sound-dream.js'
+import { GameBuilder, Reason } from './game-dream.js';
+// import * as sound from './sound-dream.js'
 
 const gameFinishBanner = new PopUp();
 const game = new GameBuilder()
@@ -16,15 +16,15 @@ game.setGameStopListener(reason => {
   switch (reason) {
     case Reason.cancel:
       message = 'replay?';
-      sound.playAlert();
+      // sound.playAlert();
       break;
     case Reason.win:
       message = 'You Won';
-      sound.playWin();
+      // sound.playWin();
       break;
     case Reason.lose:
       message = 'You Lost';
-      sound.playBug();
+      // sound.playBug();
       break;
   
     default:
@@ -33,6 +33,4 @@ game.setGameStopListener(reason => {
   gameFinishBanner.showWithText(message);
 });
 
-gameFinishBanner.setClickListener(() => {
-  game.start();
-});
+gameFinishBanner.setClickListener(game.start);

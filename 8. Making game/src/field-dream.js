@@ -10,7 +10,7 @@ export const ItemType = Object.freeze({
   bug: 'bug',
 });
 
-export  class Field {
+export class Field {
   constructor(carrotCount, bugCount) {
     this.carrotCount = carrotCount;
     this.bugCount = bugCount;
