@@ -6,9 +6,9 @@ import { GameBuilder, Reason } from './game-dream.js';
 
 const gameFinishBanner = new PopUp();
 const game = new GameBuilder()
-              .gameDuration(2)
-              .carrotCount(1)
-              .bugCount(1)
+              .withGameDuration(2)
+              .withCarrotCount(1)
+              .withBugCount(1)
               .build();
 
 game.setGameStopListener(reason => {

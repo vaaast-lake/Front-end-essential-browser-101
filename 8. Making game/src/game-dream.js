@@ -13,18 +13,18 @@ export const Reason = Object.freeze({
 // Builder Pattern
 // 오브젝트를 간단명료하고 가독성 좋게 만들 수 있다.
 export class GameBuilder {
-  gameDuration(duration) {
+  withGameDuration(duration) {
     this.gameDuration = duration;
     // class 자체를 리턴.
     return this;
   }
 
-  carrotCount(num) {
+  withCarrotCount(num) {
     this.carrotCount = num;
     return this;
   }
 
-  bugCount(num) {
+  withBugCount(num) {
     this.bugCount = num;
     return this;
   }
