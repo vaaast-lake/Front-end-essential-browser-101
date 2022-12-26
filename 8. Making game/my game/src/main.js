@@ -1,5 +1,7 @@
 'use strict';
 
+import PopUp from "./pop-up.js";
+
 // game section
 const gameControlBtn = document.querySelector('.game__control.btn');
 const gameTimer = document.querySelector('.game__timer');
@@ -13,9 +15,11 @@ const fieldWidth = gameField.getBoundingClientRect().width;
 const ITEM_NUM = 5;
 
 // pop-up
-const popUp = document.querySelector('.pop-up');
-const refreshBtn = document.querySelector('.pop-up__refresh.btn');
-const popUpMessage = document.querySelector('.pop-up__message');
+// const popUp = document.querySelector('.pop-up');
+// const refreshBtn = document.querySelector('.pop-up__refresh.btn');
+// const popUpMessage = document.querySelector('.pop-up__message');
+const popUp = new PopUp();
+
 
 // stop-reason
 const Reason = Object.freeze({
@@ -23,6 +27,7 @@ const Reason = Object.freeze({
   lose: 'lose',
   pause: 'pause',
 });
+
 // item Type
 const itemType = Object.freeze({
   carrot: 'carrot',
@@ -70,7 +75,7 @@ const gameStart = () => {
   start = true;
   gameInterfaceControl();
   timeControl();
-  popUpHideControl();
+  popUp.hideControl();
   updateCarrotCnt();
   if (!gameField.innerHTML) {
     addImgItem(itemType.carrot, ITEM_NUM, '../carrot/img/carrot.png');
@@ -81,9 +86,9 @@ const gameStart = () => {
 const gameStop = (reason) => {
   start = false;
   gameInterfaceControl(reason);
-  popUpHideControl(reason);
+  popUp.hideControl(reason);
   timeControl(reason);
-  popUpMessageControl(reason);
+  popUp.message(reason);
 }
 
 const gameInterfaceControl = (reason) => {
@@ -109,38 +114,40 @@ gameControlBtn.addEventListener('click', () => {
 });
 
 // pop-up
-const popUpHideControl = (reason) => {
-  if (reason) {
-    popUp.classList.remove('hide');
-  } else {
-    popUp.classList.add('hide');
-  }
-}
+// const popUpHideControl = (reason) => {
+//   if (reason) {
+//     popUp.classList.remove('hide');
+//   } else {
+//     popUp.classList.add('hide');
+//   }
+// }
 
-const popUpMessageControl = (reason) => {
-  let message;
-  switch (reason) {
-    case Reason.win:
-      message = 'You Won!';
-      break;
-    case Reason.lose:
-      message = 'You Lost!';
-      break;
-    case Reason.pause:
-      message = 'Retry?';
-      break;
+// const popUpMessageControl = (reason) => {
+//   let message;
+//   switch (reason) {
+//     case Reason.win:
+//       message = 'You Won!';
+//       break;
+//     case Reason.lose:
+//       message = 'You Lost!';
+//       break;
+//     case Reason.pause:
+//       message = 'Retry?';
+//       break;
   
-    default:
-      console.error('No Valid request.');
-      break;
-  }
-  popUpMessage.textContent = message;
-}
+//     default:
+//       console.error('No Valid request.');
+//       break;
+//   }
+//   popUpMessage.textContent = message;
+// }
 
-refreshBtn.addEventListener('click', () => {
-  gameInit();
-  popUpHideControl();
-});
+// refreshBtn.addEventListener('click', () => {
+//   gameInit();
+//   popUpHideControl();
+// });
+
+popUp.onClickListener(gameInit);
 
 // game-field
 const randomPositioning = (min, max) => {
