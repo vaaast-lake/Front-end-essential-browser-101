@@ -15,6 +15,7 @@ const ITEM_NUM = 5;
 // pop-up
 const popUp = document.querySelector('.pop-up');
 const refreshBtn = document.querySelector('.pop-up__refresh.btn');
+const popUpMessage = document.querySelector('.pop-up__message');
 
 // stop-reason
 const Reason = Object.freeze({
@@ -82,6 +83,7 @@ const gameStop = (reason) => {
   gameInterfaceControl(reason);
   popUpHideControl(reason);
   timeControl(reason);
+  popUpMessageControl(reason);
 }
 
 const gameInterfaceControl = (reason) => {
@@ -113,6 +115,26 @@ const popUpHideControl = (reason) => {
   } else {
     popUp.classList.add('hide');
   }
+}
+
+const popUpMessageControl = (reason) => {
+  let message;
+  switch (reason) {
+    case Reason.win:
+      message = 'You Won!';
+      break;
+    case Reason.lose:
+      message = 'You Lost!';
+      break;
+    case Reason.pause:
+      message = 'Retry?';
+      break;
+  
+    default:
+      console.error('No Valid request.');
+      break;
+  }
+  popUpMessage.textContent = message;
 }
 
 refreshBtn.addEventListener('click', () => {
