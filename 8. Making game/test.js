@@ -14,3 +14,7 @@ const test = () => {
 // console.log(test);
 test()
 
+const obj = { name: 'kwon', age:20 };
+const obj2 = { ...obj };
+
+console.log(obj2);
