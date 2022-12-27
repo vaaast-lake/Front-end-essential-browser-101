@@ -9,7 +9,34 @@ export const Reason = Object.freeze({
   pause: 'pause',
 });
 
-export class Game {
+export class Gamebuilder {
+  constructor(gameTime, carrotNum, bugNum) {
+    this.GAME_TIME = gameTime;
+    this.CARROT_NUM = carrotNum;
+    this.BUG_NUM = bugNum;
+  }
+
+  withDuration = (duration) => {
+    this.GAME_TIME = duration;
+    return this;
+  }
+
+  withCarrotCnt = (carrotCnt) => {
+    this.CARROT_NUM = carrotCnt;
+    return this;
+  }
+
+  withBugCnt = (bugCnt) => {
+    this.BUG_NUM = bugCnt;
+    return this;
+  }
+
+  build = () => {
+    return new Game(this.GAME_TIME, this.CARROT_NUM, this.BUG_NUM);
+  }
+}
+
+class Game {
   constructor(gameTime, carrotNum, bugNum) {
     this.GAME_TIME = gameTime;
     this.CARROT_NUM = carrotNum;
