@@ -16,7 +16,7 @@ export class Field {
     this.section.addEventListener('click', this.itemRemover);
   }
 
-  onClickListener = (func1) => {
+  setClickListener = (func1) => {
     this.onClick = func1;
   }
   

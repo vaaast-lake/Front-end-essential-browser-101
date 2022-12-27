@@ -1,9 +1,15 @@
 'use strict';
 
 import { Field, ItemType } from "./field.js";
-import { PopUp, Reason } from './pop-up.js';
+import { PopUp } from './pop-up.js';
 
-export default class Game {
+export const Reason = Object.freeze({
+  win: 'win',
+  lose: 'lose',
+  pause: 'pause',
+});
+
+export class Game {
   constructor(gameTime, carrotNum, bugNum) {
     this.GAME_TIME = gameTime;
     this.CARROT_NUM = carrotNum;
@@ -13,28 +19,32 @@ export default class Game {
     this.timer = document.querySelector('.game__timer');
     this.carrotCnt = document.querySelector('.game__counter');
 
-    this.start = false;
+    this.flag = false;
     this.interval = null;
     this.remainingTime = this.GAME_TIME;
     this.count = 0;
 
     this.field = new Field();
-    this.field.onClickListener(this.onItemClick);
+    this.field.setClickListener(this.onItemClick);
 
     this.popUp = new PopUp();
-    this.popUp.onClickListener(this.init);
+    this.popUp.setClickListener(this.init);
 
     this.controlBtn.addEventListener('click', () => {
-      if (this.start) {
-        this.gameStop(Reason.pause);
+      if (this.flag) {
+        this.stop(Reason.pause);
       } else {
-        this.gameStart();
+        this.start();
       }
     });
   }
 
+  stopGameListener = (func) => {
+    this.stopGame = func;
+  }
+
   init = () => {
-    this.start = false;
+    this.flag = false;
     this.remainingTime = this.GAME_TIME;
     this.field.section.innerHTML = '';
     this.count = 0;
@@ -51,11 +61,11 @@ export default class Game {
     if (item === ItemType.carrot) {
       this.updateCarrotCnt(++this.count);
       if (this.CARROT_NUM === this.count) {
-        this.gameStop(Reason.win);
+        this.stop(Reason.win);
         this.gameInterfaceControl(Reason.win);
       }
     } else if (item === ItemType.bug) {
-      this.gameStop(Reason.lose);
+      this.stop(Reason.lose);
     }
   }
 
@@ -68,7 +78,7 @@ export default class Game {
     this.interval = setInterval(() => {
       if (this.remainingTime === 0) {
         clearInterval(this.interval);
-        this.gameStop(Reason.lose);
+        this.stop(Reason.lose);
         return;
       }
       this.updateTimer(--this.remainingTime);
@@ -81,12 +91,12 @@ export default class Game {
     this.timer.innerText = `${minutes}:${seconds}`;
   }
 
-  // field, popup method?
-  gameStart = () => {
-    this.start = true;
+  start = () => {
+    this.flag = true;
     this.gameInterfaceControl();
     this.timeControl();
-    this.popUp.hideControl();
+    // this.popUp.hideControl();
+    this.popUp.hide();
     this.updateCarrotCnt();
     if (!this.field.section.innerHTML) {
       this.field._addImgItem(ItemType.carrot, this.CARROT_NUM, '../carrot/img/carrot.png');
@@ -94,13 +104,13 @@ export default class Game {
     }
   }
 
-  // popup method?
-  gameStop = (reason) => {
-    this.start = false;
+  stop = (reason) => {
+    this.flag = false;
     this.gameInterfaceControl(reason);
-    this.popUp.hideControl(reason);
+    // this.popUp.hideControl(reason);
+    // this.popUp.message(reason);
+    this.stopGame && this.stopGame(reason);
     this.timeControl(reason);
-    this.popUp.message(reason);
   }
 
   gameInterfaceControl = (reason) => {
@@ -110,7 +120,7 @@ export default class Game {
     } else {
       this.controlBtn.style.visibility = 'visible';
     }
-    if (this.start) {
+    if (this.flag) {
       this.controlBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
     } else {
       this.controlBtn.innerHTML = '<i class="fa-solid fa-play"></i>';
