@@ -1,12 +1,12 @@
 'use strict';
 
-const Reason = Object.freeze({
+export const Reason = Object.freeze({
   win: 'win',
   lose: 'lose',
   pause: 'pause',
 });
 
-export default class PopUp {
+export class PopUp {
   constructor() {
     this.popUp = document.querySelector('.pop-up');
     this.refreshBtn = document.querySelector('.pop-up__refresh.btn');
